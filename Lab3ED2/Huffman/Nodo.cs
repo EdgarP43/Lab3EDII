@@ -25,6 +25,11 @@ namespace Lab3ED2.Huffman
             recorridoDer = false;
             Valor = Convert.ToByte('N');
         }
+        public int CompareTo(object obj)
+        {
+            var comparado = (Nodo)obj;
+            return Frecuencia.CompareTo(comparado.Frecuencia);
+        }
 
     }
 }
