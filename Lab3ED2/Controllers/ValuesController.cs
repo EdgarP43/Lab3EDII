@@ -41,48 +41,33 @@ namespace Lab3ED2.Controllers
         // POST api/values
         [Route("Compress")]
         [HttpPost]
-        public async Task<IActionResult> PostCompri([FromForm] IFormFile file)
+        public void PostCompri([FromForm] IFormFile file)
         {
             var nombreArchivo = file.FileName;
             var nombre = nombreArchivo.Split('.');
             nombreArchivo = nombre[0];
             var disk = "D:\\";
-            string[] array = new string[2];
-            array[0] = disk;
-           // var h = Path.IsPathFullyQualified(file.FileName);
             var PesoOriginal = Convert.ToDouble(file.Length);
             if (file != null && file.Length > 0)
             {
                 var model = "";
                 model = Path.GetRelativePath("D:/", file.FileName);
-                array[1] = model;
                 var Model = "";
-                Model = array[0] + model;
-                //model = Path.GetFullPath(model);
-                var UbicacionHuffman = ("D:/Escritorio/Lab03EDII/Lab3ED2/Archivos Comprimidos/"+file.FileName);
+                Model = disk + model;
+                var ubica = Path.GetFullPath("Archivos Comprimidos\\");
+                var UbicacionHuffman = "Archivos comprimidos\\" + file.FileName;
                 var h = "";
-                for (int i = 4; i < UbicacionHuffman.Length; i++)
+                for (int i = 0; i < UbicacionHuffman.Length; i++)
                 {
                     h += UbicacionHuffman[i];
-                }
-                var ubi = "";
-                ubi = array[0] + h;
-                //UbicacionHuffman = Path.GetFullPath(UbicacionHuffman);
-                //var arch = new FileStream(file.FileName, FileMode.Create);
-                //file.CopyTo(arch);                
-                if (Huffman.Huffman.Instancia.CompresiónHuffman(Model, nombre, ubi) == 1)
+                }            
+                if (Huffman.Huffman.Instancia.CompresiónHuffman(Model, nombre, ubica) == 1)
                 {
-                    var RutaArchivoCompreso = ("D:/Escritorio/Lab03EDII/Lab3ED2/Archivos Comprimidos/"+nombreArchivo+".huff");
-                    // RutaArchivoCompreso = Path.GetFullPath(RutaArchivoCompreso);
-                    var h1 = "";
-                    for (int i = 4; i < RutaArchivoCompreso.Length; i++)
-                    {
-                        h1 += RutaArchivoCompreso[i];
-                    }
-                    var ruta = "";
-                    ruta = array[0] + h1;
+                    var pathArchivoCompri = Path.GetFullPath("Archivos Comprimidos\\");
+                    var RutaArchivoCompreso = (pathArchivoCompri + nombreArchivo + ".huff");
 
-                    var ArchivoCompreso = new FileInfo(ruta);
+
+                    var ArchivoCompreso = new FileInfo(RutaArchivoCompreso);
                     var PesoCompreso = Convert.ToDouble(ArchivoCompreso.Length);
 
                     var Archivo = new Archivo();
@@ -93,48 +78,33 @@ namespace Lab3ED2.Controllers
 
                     Huffman.Huffman.Instancia.DatosDeArchivos.Add(Archivo.NombreArchivo, Archivo);
 
-                    listaComprimidos.Add(file.FileName+".huff");
+                    listaComprimidos.Add(file.FileName + ".huff");
                 }
             }
-            return Ok();
         }
 
         [Route("Descompress")]
         [HttpPost]
-        public ActionResult<string> PostDescompri([FromBody] string Nombre)
+        public void PostDescompri([FromForm] IFormFile Nombre)
         {
-            var NombreArchivo = Nombre;
+            var NombreArchivo = Nombre.FileName;
             var nombre = NombreArchivo.Split('.');
             var nombreArchivo = nombre[0];
-            var filePath = Path.GetFullPath(NombreArchivo);
+            var filePath = Path.GetFullPath("Archivos Comprimidos\\");
+            filePath = filePath + NombreArchivo;
+            var pathDescompress = Path.GetFullPath("Archivos Descomprimidos\\");
             var Archivo = new FileStream(filePath, FileMode.Open);
             Archivo.Close();
-            try
-            {
-                if (Archivo != null && Archivo.Length > 0)
-                {
-                    var model = ($"/Archivos Comprimidos/{nombreArchivo}");
+            var model = filePath;
 
-                    var UbicacionDescomprimidos = ("//Archivos Descomprimidos");
+            var UbicacionDescomprimidos = pathDescompress;
 
-                    if (Huffman.Huffman.Instancia.Descompresion(model, nombre, UbicacionDescomprimidos) == 1)
-                    {
-                        return "Carga del archivo correcta";
-                    }
-                    else
-                    {
-                        return "Carga del archivo incorrecta";
-                    }
-                }
-                else
-                {
-                    return "ERROR AL CARGAR EL ARCHIVO, INTENTE DE NUEVO";
-                }
-            }
-            catch
+            if (Huffman.Huffman.Instancia.Descompresion(model, nombre, UbicacionDescomprimidos) == 1)
             {
-                return "ERROR AL CARGAR EL ARCHIVO, INTENTE DE NUEVO";
+                var g = "";
             }
+
         }
     }
 }
+
