@@ -1,0 +1,14 @@
+D:\Escritorio\Lab03EDII\Lab3ED2\bin\Debug\netcoreapp2.1\Lab3ED2.deps.json
+D:\Escritorio\Lab03EDII\Lab3ED2\bin\Debug\netcoreapp2.1\Lab3ED2.runtimeconfig.json
+D:\Escritorio\Lab03EDII\Lab3ED2\bin\Debug\netcoreapp2.1\Lab3ED2.runtimeconfig.dev.json
+D:\Escritorio\Lab03EDII\Lab3ED2\bin\Debug\netcoreapp2.1\Lab3ED2.dll
+D:\Escritorio\Lab03EDII\Lab3ED2\bin\Debug\netcoreapp2.1\Lab3ED2.pdb
+D:\Escritorio\Lab03EDII\Lab3ED2\obj\Debug\netcoreapp2.1\Lab3ED2.csprojAssemblyReference.cache
+D:\Escritorio\Lab03EDII\Lab3ED2\obj\Debug\netcoreapp2.1\Lab3ED2.csproj.CoreCompileInputs.cache
+D:\Escritorio\Lab03EDII\Lab3ED2\obj\Debug\netcoreapp2.1\Lab3ED2.RazorAssemblyInfo.cache
+D:\Escritorio\Lab03EDII\Lab3ED2\obj\Debug\netcoreapp2.1\Lab3ED2.RazorAssemblyInfo.cs
+D:\Escritorio\Lab03EDII\Lab3ED2\obj\Debug\netcoreapp2.1\Lab3ED2.AssemblyInfoInputs.cache
+D:\Escritorio\Lab03EDII\Lab3ED2\obj\Debug\netcoreapp2.1\Lab3ED2.AssemblyInfo.cs
+D:\Escritorio\Lab03EDII\Lab3ED2\obj\Debug\netcoreapp2.1\Lab3ED2.RazorTargetAssemblyInfo.cache
+D:\Escritorio\Lab03EDII\Lab3ED2\obj\Debug\netcoreapp2.1\Lab3ED2.dll
+D:\Escritorio\Lab03EDII\Lab3ED2\obj\Debug\netcoreapp2.1\Lab3ED2.pdb

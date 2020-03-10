@@ -11506,11 +11506,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Escritorio\\Lab3ED2\\Lab3ED2\\Lab3ED2.csproj",
+      "projectUniqueName": "D:\\Escritorio\\Lab03EDII\\Lab3ED2\\Lab3ED2.csproj",
       "projectName": "Lab3ED2",
-      "projectPath": "D:\\Escritorio\\Lab3ED2\\Lab3ED2\\Lab3ED2.csproj",
+      "projectPath": "D:\\Escritorio\\Lab03EDII\\Lab3ED2\\Lab3ED2.csproj",
       "packagesPath": "C:\\Users\\Azurdia\\.nuget\\packages\\",
-      "outputPath": "D:\\Escritorio\\Lab3ED2\\Lab3ED2\\obj\\",
+      "outputPath": "D:\\Escritorio\\Lab03EDII\\Lab3ED2\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
