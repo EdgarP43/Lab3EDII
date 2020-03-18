@@ -124,5 +124,52 @@ namespace Lab3ED2.LZW
             }
             return DiccionarioAEscribir;
         }
+        public static string ObtenerExtension(string RutaOriginal)
+        {
+            var ext = string.Empty;
+            using (var stream = new FileStream(RutaOriginal, FileMode.Open))
+            {
+                using (var reader = new BinaryReader(stream))
+                {
+                    ext = reader.ReadString();
+                }
+            }
+            return ext;
+        }
+
+        static int ultimaPosicion = 0;
+        public static Dictionary<int, string> ObtenerDiccionarioOriginal(string RutaOriginal)
+        {
+            var DiccionarioOriginal = new Dictionary<int, string>();
+            using (var stream = new FileStream(RutaOriginal, FileMode.Open))
+            {
+                using (var reader = new BinaryReader(stream))
+                {
+                    var byteBuffer = new byte[bufferLength];
+                    var ExtensionLeida = false;
+                    var ByteLeido = string.Empty;
+
+                    while (reader.BaseStream.Position != reader.BaseStream.Length)
+                    {
+                        ByteLeido = reader.ReadString();
+                        if (ExtensionLeida == false)
+                        {
+                            ExtensionLeida = true;
+                        }
+                        else if (ByteLeido != "--")
+                        {
+                            var separador = ByteLeido.Split('|');
+                            DiccionarioOriginal.Add(Convert.ToInt32(separador[1]), separador[0]);
+                        }
+                        else
+                        {
+                            ultimaPosicion = Convert.ToInt32(reader.BaseStream.Position);
+                            break;
+                        }
+                    }
+                }
+            }
+            return DiccionarioOriginal;
+        }
     }
 }
