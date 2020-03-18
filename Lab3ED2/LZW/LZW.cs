@@ -171,5 +171,110 @@ namespace Lab3ED2.LZW
             }
             return DiccionarioOriginal;
         }
+        static int BinarioADecimal(string input)
+        {
+            char[] array = input.ToCharArray();
+            Array.Reverse(array);
+            int sum = 0;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == '1')
+                {
+                    sum += (int)Math.Pow(2, i);
+                }
+            }
+            return sum;
+        }
+
+        public static void CompletarDiccionarioYEscribir(Dictionary<int, string> CaracteresOriginales, string RutaOriginal, string UbicacionAAlmacenarLZW, string[] nombreArchivo, string extension)
+        {
+            using (var stream = new FileStream(RutaOriginal, FileMode.Open))
+            {
+                using (var reader = new BinaryReader(stream))
+                {
+                    using (var streamwriter = new FileStream($"{UbicacionAAlmacenarLZW}//{nombreArchivo[0]}.{extension}", FileMode.OpenOrCreate))
+                    {
+                        using (var writer = new BinaryWriter(streamwriter))
+                        {
+                            var byteBuffer = new byte[bufferLength];
+                            var indice = CaracteresOriginales.Count() + 1;
+
+                            var codigoViejo = 0;
+                            var codigoNuevo = 0;
+                            var cadena = string.Empty;
+                            var caracter = string.Empty;
+                            var salida = string.Empty;
+
+
+                            while (reader.BaseStream.Position != reader.BaseStream.Length)
+                            {
+                                byteBuffer = reader.ReadBytes(bufferLength);
+
+                                codigoViejo = byteBuffer[ultimaPosicion + 1];
+                                caracter = CaracteresOriginales[codigoViejo];
+
+                                var caracChar = caracter.ToCharArray();
+                                foreach (var item in caracChar)
+                                {
+                                    var caracterAChar = Convert.ToChar(item);
+                                    var dec = Convert.ToInt32(caracterAChar);
+                                    writer.Write(Convert.ToByte(dec));
+                                }
+
+
+                                for (int i = ultimaPosicion + 2; i < byteBuffer.Length; i++)
+                                {
+                                    var cantBytesALeer = Convert.ToInt32(byteBuffer[i]);
+                                    var binario = string.Empty;
+
+                                    for (int j = 1; j <= cantBytesALeer; j++)
+                                    {
+                                        if (i + j < byteBuffer.Length)
+                                        {
+                                            binario = $"{binario}{Convert.ToString(Convert.ToInt32(byteBuffer[i + j]), 2).PadLeft(8, '0')}";
+                                        }
+                                    }
+
+                                    codigoNuevo = BinarioADecimal(binario);
+
+                                    i += cantBytesALeer;
+
+                                    if (CaracteresOriginales.ContainsKey(codigoNuevo))
+                                    {
+                                        cadena = CaracteresOriginales[codigoNuevo];
+
+                                        var cadenaBytes = cadena.ToCharArray();
+                                        foreach (var byteEnCadena in cadenaBytes)
+                                        {
+                                            writer.Write(Convert.ToByte(Convert.ToInt32(byteEnCadena)));
+                                        }
+
+                                        caracter = cadena.Substring(0, 1);
+
+                                        var agregado = $"{CaracteresOriginales[codigoViejo]}{caracter}";
+
+                                        CaracteresOriginales.Add(indice, agregado);
+                                        indice++;
+                                        codigoViejo = codigoNuevo;
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public static int Descomprimir(string RutaOriginal, string[] nombreArchivo, string UbicacionAAlmacenarLZW)
+        {
+            var extension = ObtenerExtension(RutaOriginal);
+
+            var CaracteresOriginales = ObtenerDiccionarioOriginal(RutaOriginal);
+
+            CompletarDiccionarioYEscribir(CaracteresOriginales, RutaOriginal, UbicacionAAlmacenarLZW, nombreArchivo, extension);
+
+            return 1;
+        }
     }
 }
